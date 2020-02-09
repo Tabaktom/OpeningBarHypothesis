@@ -160,12 +160,12 @@ def functional(dfs, ms, dows, symbs):
     model.compile(loss = 'sparse_categorical_crossentropy', optimizer='rmsprop')
     return model
 
-model = functional(dfs, ms, dows, symbs)
-model.fit(train_inputs, train_y, epochs=10)
-res = model.evaluate(test_inputs, test_y)
-#model = snn()
-#model.fit(train_x,train_y, epochs=20)
-#results= model.evaluate(test_x, test_y)
+###model = functional(dfs, ms, dows, symbs)
+###model.fit(train_inputs, train_y, epochs=10)
+###res = model.evaluate(test_inputs, test_y)
+model = snn()
+model.fit(train_x,train_y, epochs=20)
+results= model.evaluate(test_x, test_y)
 print('results: {}'.format(results))
 board_log()
 #hist = history.history

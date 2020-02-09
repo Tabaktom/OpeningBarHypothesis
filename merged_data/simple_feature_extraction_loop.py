@@ -57,6 +57,6 @@ for sym in symbols:
     dataf = pd.concat([pd.DataFrame(date_frame), pd.DataFrame(technical_frame)], axis=1)
     dataf.index=df.Date
     print(dataf)
-    dataf.to_csv('/Users/macbooik/PycharmProjects/OpeningBarHypothesis/data_features_extracted_post2/simple_features_{}.csv'.format(sym))
+    dataf.to_csv('/Users/Tom/PycharmProjects/OpeningBarHypothesis/data_features_extracted_post2/simple_features_{}.csv'.format(sym))
 
 

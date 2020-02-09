@@ -4,8 +4,8 @@ symbols = ['AGG', 'DIA', 'IAU', 'IWB', 'QQQ', 'SHY', 'TLT', 'VNQ', 'XLU']
 
 for sym in symbols:
 
-    daily = pd.read_csv('/Users/macbooik/PycharmProjects/OpeningBarHypothesis/Data/{}_daily.txt'.format(sym))
-    hourly = pd.read_csv('/Users/macbooik/PycharmProjects/OpeningBarHypothesis/Data/{}_hourly.txt'.format(sym))
+    daily = pd.read_csv('/Users/Tom/PycharmProjects/OpeningBarHypothesis/Data/{}_daily.txt'.format(sym))
+    hourly = pd.read_csv('/Users/Tom/PycharmProjects/OpeningBarHypothesis/Data/{}_hourly.txt'.format(sym))
 
     hourly_frame = {'Date': [], 'hourly_open':[], 'hourly_high': [], 'hourly_low': [], 'hourly_close': [], 'hourly_vol': []}
     for index, row in hourly.iterrows():
@@ -55,5 +55,5 @@ for sym in symbols:
     print(df)
     #df.to_csv('Merged_bar_data.csv')
     print('ok')
-    df.to_csv('/Users/macbooik/PycharmProjects/OpeningBarHypothesis/merged_data/{}_data.txt'.format(sym))
+    df.to_csv('/Users/Tom/PycharmProjects/OpeningBarHypothesis/merged_data/{}_data.txt'.format(sym))
     print('completed: {}'.format(sym))
