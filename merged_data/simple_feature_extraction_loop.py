@@ -4,10 +4,10 @@ import datetime
 
 
 
-symbols = ['AGG', 'DIA', 'IAU', 'IWB', 'QQQ', 'SHY', 'TLT', 'VNQ', 'XLU', 'EEM', 'GDX', 'IEMG', 'IJR', 'USO', 'VWO', 'XLF', 'XLK']
+symbols = ['AGG', 'DIA', 'IAU', 'IWB', 'QQQ', 'SHY', 'TLT', 'VNQ', 'XLU', 'EEM', 'GDX', 'IEMG', 'IJR', 'USO', 'VWO', 'XLF', 'XLK', 'IVV']
 for sym in symbols:
     df = pd.read_csv('{}_data.txt'.format(sym))
-    date_frame ={'Month': [], 'DayofWeek': [], 'symbol': []}
+    date_frame ={'Month': [], 'DayofWeek': [], 'symbol': [], 'previous_day': []}
 
     years = []
     months = []
@@ -22,6 +22,7 @@ for sym in symbols:
         d =datetime.date(int(row.Date[0:4]), int(row.Date[5:7]), int(row.Date[8:]))
         date_frame['DayofWeek'].append(d.weekday())
         date_frame['symbol'].append(sym)
+        date_frame['previous_day'].append(row.previous_day)
     for index, row in df.iterrows():
         #y = row.Date[0:4]
         #date_frame['Year'].append(years.index(y))

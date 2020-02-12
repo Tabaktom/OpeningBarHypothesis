@@ -1,6 +1,6 @@
 import pandas as pd
 
-symbols = ['EEM', 'GDX', 'IEMG', 'IJR', 'USO', 'VWO', 'XLF', 'XLK']
+symbols = ['EEM', 'GDX', 'IEMG', 'IJR', 'USO', 'VWO', 'XLF', 'XLK', 'IVV']
 
 for sym in symbols:
 
@@ -40,17 +40,23 @@ for sym in symbols:
     #print(pd.DataFrame(daily_frame))
     #print(pd.DataFrame(hourly_frame))
     print(df)
-    frame = {'Label' : []}
+    frame = {'Label' : [], 'previous_day': []}
     df = df.drop(columns = ['Date1'])
+    yesterday = 'NONE'
     for index, row in df.iterrows():
+        frame['previous_day'].append(yesterday)
         if row.daily_high == row.hourly_high and row.daily_low == row.hourly_low:
             frame['Label'].append('BOTH') #BOTH
+            yesterday='BOTH'
         elif row.daily_high == row.hourly_high:
             frame['Label'].append('HIGHS') #HIGHS
+            yesterday='HIGHS'
         elif row.daily_low == row.hourly_low:
             frame['Label'].append('LOWS') #LOWS
+            yesterday='LOWS'
         else:
             frame['Label'].append('NONE') #NONE
+            yesterday='NONE'
     df = pd.concat([df, pd.DataFrame(frame)], axis=1)
     print(df)
     #df.to_csv('Merged_bar_data.csv')

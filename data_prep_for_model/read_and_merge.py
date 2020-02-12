@@ -1,6 +1,6 @@
 import pandas as pd
 
-symbols = ['AGG', 'DIA', 'IAU', 'IWB', 'QQQ', 'SHY', 'TLT', 'VNQ', 'XLU', 'SPY', 'EEM', 'GDX', 'IEMG', 'IJR', 'USO', 'VWO', 'XLF', 'XLK']
+symbols = ['AGG', 'DIA', 'IAU', 'IWB', 'QQQ', 'SHY', 'TLT', 'VNQ', 'XLU', 'SPY', 'EEM', 'GDX', 'IEMG', 'IJR', 'USO', 'VWO', 'XLF', 'XLK', 'IVV']
 path = '/Users/Tom/PycharmProjects/OpeningBarHypothesis/data_features_extracted_post2/'
 for ind, sym in enumerate(symbols):
     path_full='/Users/Tom/PycharmProjects/OpeningBarHypothesis/data_features_extracted_post2/simple_features_{}.csv'.format(sym)
