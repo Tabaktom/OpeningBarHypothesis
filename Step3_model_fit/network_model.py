@@ -10,6 +10,11 @@ from keras.models import Model
 import keras
 from keras.callbacks import TensorBoard
 import time
+import os
+import imageio
+os.environ["PATH"] += os.pathsep + '/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/Graphviz2.38/bin/'
+
+
 NAME = "OpeningBar-5_Submodels-3_HiddenLayersMain_{}".format(time.time())
 tensorboard = TensorBoard(log_dir = '/Users/Tom/PycharmProjects/OpeningBarHypothesis/logs/()'.format(NAME))
 
@@ -99,54 +104,82 @@ def nn(dfs, ms, dows, symbs):
 def IndividualFeatureModel(dfs, ms, dows, symbs, prev):
 
     rest_input=keras.layers.Input((dfs[1],), dtype='float32', name='RestInput')
-    rest_model1=keras.layers.Dense(1000, activation='relu',name='RestModel1', kernel_initializer='glorot_uniform')(rest_input)
-    rest_model2=keras.layers.Dense(100, activation='relu', name='RestModel2', kernel_initializer='glorot_uniform')(rest_model1)
-    rest_model3=keras.layers.Dense(10, activation='relu', name ='Restlayer3', kernel_initializer='glorot_uniform')(rest_model2)
-    rest_prob=keras.layers.Dense(4, activation='softmax', name='RestProb', kernel_initializer='glorot_uniform')(rest_model3)
+    rest_model1=keras.layers.Dense(16, activation='relu',name='RestModel1', kernel_initializer='glorot_uniform')(rest_input)
+    rest_model2=keras.layers.Dense(64, activation='relu', name='RestModel2', kernel_initializer='glorot_uniform')(rest_model1)
+    rest_model3 = keras.layers.Dense(128, activation='relu', name='RestModel3', kernel_initializer='glorot_uniform')(rest_model2)
+    rest_model4 = keras.layers.Dense(64, activation='relu', name='RestModel4', kernel_initializer='glorot_uniform')(rest_model3)
+    rest_model5=keras.layers.Dense(16, activation='relu', name ='Restlayer5', kernel_initializer='glorot_uniform')(rest_model4)
+    rest_prob=keras.layers.Dense(4, activation='softmax', name='RestProb', kernel_initializer='glorot_uniform')(rest_model5)
 
     month_input=keras.layers.Input((ms[1],), dtype='float32', name='MonthInput')
-    month_model1=keras.layers.Dense(1000, activation='relu', name='MonthModel1', kernel_initializer='glorot_uniform')(month_input)
-    month_model2=keras.layers.Dense(100, activation='relu', name='MonthModel2', kernel_initializer='glorot_uniform')(month_model1)
-    month_model3=keras.layers.Dense(10, activation='relu', name = 'MonthModel3', kernel_initializer='glorot_uniform')(month_model2)
-    month_prob=keras.layers.Dense(4, activation='softmax', name='MonthProb', kernel_initializer='glorot_uniform')(month_model3)
+    month_model1=keras.layers.Dense(16, activation='relu', name='MonthModel1', kernel_initializer='glorot_uniform')(month_input)
+    month_model2=keras.layers.Dense(64, activation='relu', name='MonthModel2', kernel_initializer='glorot_uniform')(month_model1)
+    month_model3=keras.layers.Dense(128, activation='relu', name = 'MonthModel3', kernel_initializer='glorot_uniform')(month_model2)
+    month_model4 = keras.layers.Dense(64, activation='relu', name='MonthModel4', kernel_initializer='glorot_uniform')(month_model3)
+    month_model5 = keras.layers.Dense(16, activation='relu', name='MonthModel5', kernel_initializer='glorot_uniform')(month_model4)
+    month_prob=keras.layers.Dense(4, activation='softmax', name='MonthProb', kernel_initializer='glorot_uniform')(month_model5)
 
     dow_input=keras.layers.Input((dows[1],), dtype='float32', name='DowInput')
-    dow_model1=keras.layers.Dense(1000, activation='relu', name='DowModel1', kernel_initializer='glorot_uniform')(dow_input)
-    dow_model2=keras.layers.Dense(100, activation='relu', name='DowModel2', kernel_initializer='glorot_uniform')(dow_model1)
-    dow_model3=keras.layers.Dense(10, activation='relu', name='DowModel3', kernel_initializer='glorot_uniform')(dow_model2)
-    dow_prob=keras.layers.Dense(4, activation='softmax', name='Dowprob', kernel_initializer='glorot_uniform')(dow_model3)
+    dow_model1=keras.layers.Dense(16, activation='relu', name='DowModel1', kernel_initializer='glorot_uniform')(dow_input)
+    dow_model2=keras.layers.Dense(64, activation='relu', name='DowModel2', kernel_initializer='glorot_uniform')(dow_model1)
+    dow_model3=keras.layers.Dense(128, activation='relu', name='DowModel3', kernel_initializer='glorot_uniform')(dow_model2)
+    dow_model4 = keras.layers.Dense(64, activation='relu', name='DowModel4', kernel_initializer='glorot_uniform')(dow_model3)
+    dow_model5 = keras.layers.Dense(16, activation='relu', name='DowModel5', kernel_initializer='glorot_uniform')(dow_model4)
+    dow_prob=keras.layers.Dense(4, activation='softmax', name='Dowprob', kernel_initializer='glorot_uniform')(dow_model5)
 
     sym_input = keras.layers.Input((symbs[1],), dtype='float32', name='SymbInput')
-    sym_model1 = keras.layers.Dense(1000, activation='relu', name='SymbModel1', kernel_initializer='glorot_uniform')(sym_input)
-    sym_model2=keras.layers.Dense(100, activation='relu', name='SymbModel2', kernel_initializer='glorot_uniform')(sym_model1)
-    sym_model3=keras.layers.Dense(10, activation='relu', name='SymbModel3', kernel_initializer='glorot_uniform')(sym_model2)
-    sym_prob = keras.layers.Dense(4, activation='softmax', name='SymbProb', kernel_initializer='glorot_uniform')(sym_model3)
+    sym_model1 = keras.layers.Dense(16, activation='relu', name='SymbModel1', kernel_initializer='glorot_uniform')(sym_input)
+    sym_model2=keras.layers.Dense(64, activation='relu', name='SymbModel2', kernel_initializer='glorot_uniform')(sym_model1)
+    sym_model3=keras.layers.Dense(128, activation='relu', name='SymbModel3', kernel_initializer='glorot_uniform')(sym_model2)
+    sym_model4 = keras.layers.Dense(64, activation='relu', name='SymbModel4', kernel_initializer='glorot_uniform')(sym_model3)
+    sym_model5 = keras.layers.Dense(16, activation='relu', name='SymbModel5', kernel_initializer='glorot_uniform')(sym_model4)
+    sym_prob = keras.layers.Dense(4, activation='softmax', name='SymbProb', kernel_initializer='glorot_uniform')(sym_model5)
 
     prev_input=keras.layers.Input((prev[1], ), dtype='float32', name='PrevInput')
-    prev_model1=keras.layers.Dense(1000,activation='relu',name='PrevModel1', kernel_initializer='glorot_uniform')(prev_input)
-    prev_model2=keras.layers.Dense(100,activation='relu', name='PrevModel2', kernel_initializer='glorot_uniform')(prev_model1)
-    prev_model3=keras.layers.Dense(10, activation='relu', name='PrevModel3', kernel_initializer='glorot_uniform')(prev_model2)
-    prev_prob=keras.layers.Dense(4, activation='softmax', name='PrevProb', kernel_initializer='glorot_uniform')(prev_model3)
+    prev_model1=keras.layers.Dense(16,activation='relu',name='PrevModel1', kernel_initializer='glorot_uniform')(prev_input)
+    prev_model2=keras.layers.Dense(64,activation='relu', name='PrevModel2', kernel_initializer='glorot_uniform')(prev_model1)
+    prev_model3=keras.layers.Dense(128, activation='relu', name='PrevModel3', kernel_initializer='glorot_uniform')(prev_model2)
+    prev_model4 = keras.layers.Dense(64, activation='relu', name='PrevModel4', kernel_initializer='glorot_uniform')(prev_model3)
+    prev_model5 = keras.layers.Dense(16, activation='relu', name='PrevModel5', kernel_initializer='glorot_uniform')(prev_model4)
+    prev_prob=keras.layers.Dense(4, activation='softmax', name='PrevProb', kernel_initializer='glorot_uniform')(prev_model5)
 
 
     combined = keras.layers.concatenate([rest_prob, month_prob, dow_prob, sym_prob, prev_prob],name='Combine')
-    hidden_1 = keras.layers.Dense(10000, activation='relu', name='FirstHidden', kernel_initializer='glorot_uniform')(combined)
-    hidden_2 = keras.layers.Dense(1000, activation='relu', name='SecondHidden', kernel_initializer='glorot_uniform')(hidden_1)
-    hidden_3 = keras.layers.Dense(100, activation='relu', name='FinalHidden', kernel_initializer='glorot_uniform')(hidden_2)
-    output = keras.layers.Dense(4, activation='softmax', name='Output', kernel_initializer='glorot_uniform')(hidden_3)
+    hidden_1 = keras.layers.Dense(16, activation='relu', name='FirstHidden', kernel_initializer='glorot_uniform')(combined)
+    hidden_2 = keras.layers.Dense(64, activation='relu', name='SecondHidden', kernel_initializer='glorot_uniform')(hidden_1)
+    hidden_3 = keras.layers.Dense(128, activation='relu', name='FinalHidden1', kernel_initializer='glorot_uniform')(hidden_2)
+    hidden_4 = keras.layers.Dense(64, activation='relu', name='FinalHidden2', kernel_initializer='glorot_uniform')(hidden_3)
+    hidden_5 = keras.layers.Dense(16, activation='relu', name='FinalHidden3', kernel_initializer='glorot_uniform')(hidden_4)
+
+
+    output = keras.layers.Dense(4, activation='softmax', name='Output', kernel_initializer='glorot_uniform')(hidden_5)
     model = keras.Model(inputs=[rest_input, month_input, dow_input, sym_input, prev_input], output=[output])
     model.compile(loss='sparse_categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+    print(model.summary())
     return model
+def convert_pic(model, output_file_name):
+    from svglib.svglib import svg2rlg
+    from reportlab.graphics import renderPDF, renderPM
+    model = svg2rlg(model)
+    renderPM.drawToFile(model, output_file_name, fmt="PNG")
 
 ###model = functional(dfs, ms, dows, symbs)
 ###model.fit(train_inputs, train_y, epochs=10)
 ###res = model.evaluate(test_inputs, test_y)
+import matplotlib.pyplot as plt
 model = IndividualFeatureModel(dfs, ms, dows, symbs, prev)
+from keras.utils import plot_model
+from IPython.display import SVG
+from keras.utils import vis_utils
+print('------')
+#image = SVG(vis_utils.model_to_dot(model, show_shapes=True, show_layer_names=True).create(prog='dot', format='jpg'))
+plot_model(model, to_file='model.png', show_shapes=True, show_layer_names=True, rankdir='TB', dpi=60)
+#imageio.imwrite(image, 'model.JPG')
+#plot_model(model, show_shapes=True, show_layer_names=True, rankdir='TB')
 
-
-history = model.fit(train_inputs,train_y, validation_split=0.2, epochs=70, batch_size=2500, verbose=2, workers=3, use_multiprocessing=True)
-results= model.evaluate(test_inputs, test_y)
-print('results: {}'.format(results))
+#history = model.fit(train_inputs,train_y, validation_split=0.2, epochs=100, batch_size=2500, verbose=2, workers=3, use_multiprocessing=True)
+#results= model.evaluate(test_inputs, test_y)
+#print('results: {}'.format(results))
 
 #hist = history.history
 def plotting_loss(history):
@@ -181,6 +214,6 @@ def plotting_accuracy(history):
     plt.legend()
     plt.show()
 
-plotting_accuracy(history)
-plotting_loss(history)
+#plotting_accuracy(history)
+#plotting_loss(history)
 #plotting_accuracy(hist)
