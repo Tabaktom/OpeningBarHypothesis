@@ -62,14 +62,15 @@ test_inputs = [test_x[:, :first], test_x[:, first:second], test_x[: ,second:thir
 
 
 
-model = model_functions.FiveIntoOne(dfs, ms, dows, symbs, prev)
+#model = model_functions.FiveIntoOne(dfs, ms, dows, symbs, prev)
 
-plot_model(model, to_file='five_into_one_model.png', show_shapes=True, show_layer_names=True, rankdir='TB', dpi=60)
+model = model_functions.FiveIntoTwoIntoOne(dfs, ms, dows, symbs, prev)
+#plot_model(model, to_file='five_into_two_into_one_model.png', show_shapes=True, show_layer_names=True, rankdir='TB', dpi=60)
 #imageio.imwrite(image, 'model.JPG')
 
-#history = model.fit(train_inputs,train_y, validation_split=0.2, epochs=100, batch_size=2500, verbose=2, workers=3, use_multiprocessing=True)
-#results= model.evaluate(test_inputs, test_y)
-#print('results: {}'.format(results))
+history = model.fit(train_inputs,train_y, validation_split=0.2, epochs=100, batch_size=250, verbose=2, workers=3, use_multiprocessing=True)
+results= model.evaluate(test_inputs, test_y)
+print('results: {}'.format(results))
 
 def plotting_loss(history):
     import matplotlib
@@ -103,6 +104,6 @@ def plotting_accuracy(history):
     plt.legend()
     plt.show()
 
-#plotting_accuracy(history)
-#plotting_loss(history)
-#plotting_accuracy(hist)
+plotting_accuracy(history)
+plotting_loss(history)
+plotting_accuracy(history)
